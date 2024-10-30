@@ -35,11 +35,13 @@ class TheStorageBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(tag: NbtCompound) {
         super.writeNbt(tag)
+        tag.putInt("size", items.size)
         Inventories.writeNbt(tag, items)
     }
 
     override fun readNbt(tag: NbtCompound) {
         super.readNbt(tag)
+        val size = tag.getInt("size")
         this.items = DefaultedList.ofSize(size(), ItemStack.EMPTY)
         Inventories.readNbt(tag, items)
     }
